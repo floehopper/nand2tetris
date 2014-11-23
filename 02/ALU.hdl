@@ -65,5 +65,11 @@ CHIP ALU {
     // if (no == 1) set out = !out   // bitwise not
     Not16(in=f-out, out=not-f-out);
     // if (out < 0) set ng = 1
-    Mux16(a=f-out, b=not-f-out, sel=no, out=out);
+    Mux16(a=f-out, b=not-f-out, sel=no, out=out, out[0..7]=lsb, out[8..15]=msb, out[15]=ng);
+
+    // if (out == 0) set zr = 1
+    Or8Way(in=lsb, out=zr1);
+    Or8Way(in=msb, out=zr2);
+    Or(a=zr1, b=zr2, out=not-zr);
+    Not(in=not-zr, out=zr);
 }
