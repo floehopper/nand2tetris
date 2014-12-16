@@ -13,7 +13,7 @@ end
 task default: :test
 
 task :test do
-  Dir['01/*.tst', '02/*.tst'].each do |test_file|
+  Dir['0[1-3]/**/*.tst'].each do |test_file|
     test(test_file)
   end
 end
